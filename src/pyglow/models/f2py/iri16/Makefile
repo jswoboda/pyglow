@@ -22,7 +22,7 @@ patch_iridreg:
 	patch iridreg.for -i iridreg.patch -o iridreg_modified.for
 
 patch_iriflip:
-	python3 delete_iriflip_comments.py
+	python delete_iriflip_comments.py
 
 sig:
 	f2py -m $(mod) -h sig_file.pyf $(fortran_files) only: $(only) : | tee out1

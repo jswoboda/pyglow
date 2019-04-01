@@ -60,6 +60,7 @@ class IRI(object):
         compute_Ni=True,
         f107=None,
         f107a=None,
+        run_storm=False,
     ):
         """
         Run IRI model at point time/location and update the object state
@@ -113,7 +114,7 @@ class IRI(object):
         jf[29] = 0  # 30
         # (Brian found a case that stalled IRI when on):
         jf[32] = 0  # 33 Auroral boundary model off
-        jf[34] = 0  # 35 no foE storm update
+
         # Not standard, but outputs same as values as standard so not an issue
         jf[21] = 0  # 22 ion densities in m^-3 (not %)
         jf[33] = 0  # 34 turn messages off
@@ -156,6 +157,13 @@ class IRI(object):
 
             # Reference:
             # https://github.com/timduly4/pyglow/issues/34#issuecomment-340645358
+        if run_storm:
+            jf[25] = 1  # 26 storm update
+            jf[34] = 1  # 35 foE storm update
+            jf[35] = 0  # 36 hmF2 with foF2-storm
+            jf[36] = 0  # 37 topside foF2-storm foF2-storm
+        else:
+            jf[34] = 0  # 35 no foE storm update
 
         # Get current directory:
         my_pwd = os.getcwd()

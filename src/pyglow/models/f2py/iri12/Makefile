@@ -22,7 +22,7 @@ patch_iridreg:
 	patch iridreg.for -i iridreg.patch -o iridreg_modified.for
 
 patch_iriflip:
-	python3 delete_iriflip_comments.py
+	python delete_iriflip_comments.py
 	#patch iriflip.for -i iriflip.patch -o iriflip_modified.for
 
 sig:
