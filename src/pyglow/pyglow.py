@@ -164,7 +164,10 @@ class Point(object):
         compute_Ne=True,
         compute_Te_Ti=True,
         compute_Ni=True,
-        run_storm=False
+        foF2_storm=False,
+        foE_storm=False,
+        hmF2_storm=False,
+        topside_storm=False,
     ):
         """
         Executes IRI and assigns results to instance.
@@ -175,7 +178,10 @@ class Point(object):
         :param compute_Ne: Switch to compute Ne
         :param compute_Te_Ti: Switch to compute Te and Ti
         :param compute_Ni: Switch to compute Ni
-        :param run_storm: Add storm mode.
+        :param foF2_storm: Storm conditions foF2
+        :param foE_storm: Storm conditions for foE
+        :hmF2_storm: Storm conditions for hmF2
+        :topside_storm: Storm conditions for topside
         """
 
         # Check if user supplies indices:
@@ -201,7 +207,10 @@ class Point(object):
             compute_Ni=compute_Ni,
             f107=f107,
             f107a=f107a,
-            run_storm=run_storm
+            foF2_storm=foF2_storm,
+            foE_storm=foE_storm,
+            hmF2_storm=hmF2_storm,
+            topside_storm=topside_storm,
         )
 
         # Assign output of IRI:

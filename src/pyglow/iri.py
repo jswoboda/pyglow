@@ -60,7 +60,10 @@ class IRI(object):
         compute_Ni=True,
         f107=None,
         f107a=None,
-        run_storm=False,
+        foF2_storm=False,
+        foE_storm=False,
+        hmF2_storm=False,
+        topside_storm=False,
     ):
         """
         Run IRI model at point time/location and update the object state
@@ -82,6 +85,10 @@ class IRI(object):
         :param compute_Ni: Switch to compute Ni
         :param f107: User specified F107
         :param f107a: User specified F107A
+        :param foF2_storm: Storm conditions foF2
+        :param foE_storm: Storm conditions for foE
+        :hmF2_storm: Storm conditions for hmF2
+        :topside_storm: Storm conditions for topside
         """
 
         if version == 2016:
@@ -109,12 +116,13 @@ class IRI(object):
         jf[5] = 0  # 6  Ni - RBV-10 & TTS-03
         jf[20] = 0  # 21 ion drift not computed
         jf[22] = 0  # 23 Te_topside (TBT-2011)
+        jf[25] = 0  # 26 storm update
         jf[27] = 0  # 28 spreadF prob not computed
         jf[28] = 0  # 29 (29,30) => NeQuick
         jf[29] = 0  # 30
         # (Brian found a case that stalled IRI when on):
         jf[32] = 0  # 33 Auroral boundary model off
-
+        jf[34] = 0  # 35 foE storm update
         # Not standard, but outputs same as values as standard so not an issue
         jf[21] = 0  # 22 ion densities in m^-3 (not %)
         jf[33] = 0  # 34 turn messages off
@@ -157,13 +165,14 @@ class IRI(object):
 
             # Reference:
             # https://github.com/timduly4/pyglow/issues/34#issuecomment-340645358
-        if run_storm:
+        if foF2_storm:
             jf[25] = 1  # 26 storm update
+        if foE_storm:
             jf[34] = 1  # 35 foE storm update
+        if hmF2_storm:
             jf[35] = 0  # 36 hmF2 with foF2-storm
+        if topside_storm:
             jf[36] = 0  # 37 topside foF2-storm foF2-storm
-        else:
-            jf[34] = 0  # 35 no foE storm update
 
         # Get current directory:
         my_pwd = os.getcwd()
